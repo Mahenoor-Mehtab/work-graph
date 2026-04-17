@@ -1,36 +1,152 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Work Graph
 
-## Getting Started
+**Verified professional collaboration platform**
+Proof of work > resumes.
 
-First, run the development server:
+---
+
+## 🚀 Overview
+
+Work Graph is a platform where professionals build **verified work history** instead of traditional resumes.
+
+Each collaboration is:
+
+* Confirmed by both parties
+* Stored as a permanent record
+* Used to generate a dynamic **trust score**
+
+---
+
+## ✨ Core Features
+
+* 🔗 **Verified Collaborations**
+  Mutual confirmation → permanent proof of work
+
+* 🧠 **AI Trust Score**
+  Graph-based scoring (0–100) based on real collaborations
+
+* 📊 **Work Graph Visualization**
+  Interactive graph of professional relationships
+
+* 🏷 **Skill Proof System**
+  Skills backed by actual project evidence
+
+* 🤖 **AI Insights**
+
+  * Skill gaps
+  * Career patterns
+  * Opportunity suggestions
+
+---
+
+## 🛠 Tech Stack
+
+### Frontend
+
+* Next.js 14 (App Router)
+* TypeScript
+* Tailwind CSS
+* shadcn/ui
+* Framer Motion
+
+### Backend
+
+* Next.js API Routes
+* Prisma ORM
+* PostgreSQL (Neon)
+
+### AI
+
+* Gemini API 
+
+### Infra
+
+* Vercel (hosting)
+* Cloudinary (storage)
+* Resend (emails)
+
+---
+
+## 📁 Project Structure
+
+```
+work-graph/
+├── app/
+├── components/
+├── lib/
+├── prisma/
+├── hooks/
+├── types/
+└── ...
+```
+
+---
+
+## ⚙️ Setup
+
+### 1. Clone repo
+
+```bash
+git clone https://github.com/your-username/work-graph.git
+cd work-graph
+```
+
+### 2. Install dependencies
+
+```bash
+npm install
+```
+
+### 3. Setup environment variables
+
+Create `.env.local`:
+
+```env
+DATABASE_URL=
+BETTER_AUTH_SECRET=
+ANTHROPIC_API_KEY=
+GOOGLE_CLIENT_ID=
+GOOGLE_CLIENT_SECRET=
+```
+
+### 4. Setup database
+
+```bash
+npx prisma migrate dev
+```
+
+### 5. Run project
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🧩 Database Models (Simplified)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+* **User**
+* **Collaboration**
+* **UserSkill**
+* **AIInsight**
+* **Company**
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## 🔐 Key Concepts
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+* **Verification-first system**
+  No collaboration is valid unless both users confirm
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+* **Immutable work history**
+  Verified records cannot be edited or deleted
 
-## Deploy on Vercel
+* **Graph-based identity**
+  Your network = your credibility
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+## 💡 Vision
+
+Build a **trust layer for the professional world** where hiring is based on real work, not claims.

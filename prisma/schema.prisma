@@ -1,0 +1,88 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+ 
+}
+
+model User {
+  id              String          @id @default(cuid())
+  email           String          @unique
+  name            String
+  username        String          @unique
+  avatar          String?
+  bio             String?
+  isAnonymous     Boolean         @default(false)
+  trustScore      Float           @default(0)
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+
+  collaborations  Collaboration[] @relation("InitiatorCollabs")
+  receivedCollabs Collaboration[] @relation("ReceiverCollabs")
+  skills          UserSkill[]
+  insights        AIInsight[]
+}
+
+model Collaboration {
+  id              String         @id @default(cuid())
+  initiatorId     String
+  receiverId      String
+  projectName     String
+  description     String
+  startDate       DateTime
+  endDate         DateTime?
+  skillsUsed      String[]
+  status          CollabStatus   @default(PENDING)
+  initiatorRating Int?
+  receiverRating  Int?
+  createdAt       DateTime       @default(now())
+  verifiedAt      DateTime?
+
+  initiator       User           @relation("InitiatorCollabs", fields: [initiatorId], references: [id])
+  receiver        User           @relation("ReceiverCollabs", fields: [receiverId], references: [id])
+}
+
+enum CollabStatus {
+  PENDING
+  VERIFIED
+  REJECTED
+  DISPUTED
+}
+
+model UserSkill {
+  id          String    @id @default(cuid())
+  userId      String
+  skill       String
+  proofCount  Int       @default(0)
+  lastUsed    DateTime?
+
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model AIInsight {
+  id          String    @id @default(cuid())
+  userId      String
+  type        String
+  content     Json
+  generatedAt DateTime  @default(now())
+
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Company {
+  id        String    @id @default(cuid())
+  name      String
+  logo      String?
+  website   String?
+  plan      PlanType  @default(FREE)
+  createdAt DateTime  @default(now())
+}
+
+enum PlanType {
+  FREE
+  STARTER
+  PRO
+  ENTERPRISE
+}
