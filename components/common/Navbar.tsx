@@ -7,6 +7,7 @@ import { authClient } from '@/lib/auth-client'
 export default function Navbar() {
   const pathname = usePathname()
   const { data: session, isPending } = authClient.useSession()
+  // console.log(session, isPending);
 
   if (isPending) return null // session load hone tak kuch mat dikhao
 
