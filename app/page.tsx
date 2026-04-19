@@ -4,8 +4,20 @@ import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
+import { useEffect } from 'react'
+import { useRouter } from 'next/navigation'
+import { authClient } from '@/lib/auth-client'
 
 export default function LandingPage() {
+
+  const { data: session } = authClient.useSession()
+const router = useRouter()
+
+useEffect(() => {
+  if (session) {
+    router.push('/dashboard')
+  }
+}, [session])
   return (
     <main className="min-h-screen bg-black text-white overflow-hidden">
       {/* Grid Background */}

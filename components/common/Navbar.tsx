@@ -24,6 +24,9 @@ export default function Navbar() {
               <Link href="/graph" className={`text-sm ${pathname === '/graph' ? 'text-white' : 'text-zinc-400 hover:text-white'}`}>
                 My Graph
               </Link>
+              <Link href="/connections" className={`text-sm ${pathname === '/connections' ? 'text-white' : 'text-zinc-400 hover:text-white'}`}>
+  Connections
+</Link>
               <Link href="/discover" className={`text-sm ${pathname === '/discover' ? 'text-white' : 'text-zinc-400 hover:text-white'}`}>
                 Discover
               </Link>

@@ -1,5 +1,7 @@
 import { db } from '@/lib/db'
 import { NextRequest, NextResponse } from 'next/server'
+import { auth } from '@/lib/auth'
+import { headers } from 'next/headers'
 
 export async function GET(req: NextRequest) {
   try {
@@ -40,6 +42,27 @@ export async function GET(req: NextRequest) {
     })
 
     return NextResponse.json(users)
+  } catch {
+    return NextResponse.json({ error: 'Something went wrong' }, { status: 500 })
+  }
+}
+
+
+export async function PATCH(req: NextRequest) {
+  try {
+    const session = await auth.api.getSession({
+      headers: await headers(),
+    })
+    if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+
+    const { username } = await req.json()
+
+    const user = await db.user.update({
+      where: { id: session.user.id },
+      data: { username },
+    })
+
+    return NextResponse.json(user)
   } catch {
     return NextResponse.json({ error: 'Something went wrong' }, { status: 500 })
   }
