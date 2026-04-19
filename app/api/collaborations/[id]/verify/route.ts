@@ -8,9 +8,10 @@ import { calculateTrustScore } from '@/lib/trust-score'
 
 export async function PATCH(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params
     const session = await auth.api.getSession({
       headers: await headers(),
     })
@@ -21,7 +22,7 @@ export async function PATCH(
     const validated = verifyCollabSchema.parse(body)
 
     const collab = await db.collaboration.findUnique({
-      where: { id: params.id },
+      where: { id },
     })
 
     if (!collab) return NextResponse.json({ error: 'Not found' }, { status: 404 })
@@ -30,7 +31,7 @@ export async function PATCH(
       return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
 
     const updated = await db.collaboration.update({
-      where: { id: params.id },
+      where: { id },
       data: {
         status: validated.status,
         receiverRating: validated.rating,

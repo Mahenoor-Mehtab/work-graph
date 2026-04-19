@@ -20,21 +20,31 @@ export default function RegisterPage() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
 
+
+
   async function handleRegister() {
-    setLoading(true)
-    setError('')
-    const { error } = await authClient.signUp.email({
-      name: form.name,
-      email: form.email,
-      password: form.password,
-    })
-    if (error) {
-      setError(error.message ?? 'Something went wrong')
-      setLoading(false)
-      return
-    }
-    router.push('/')
+  setLoading(true)
+  setError('')
+  const { error, data } = await authClient.signUp.email({
+    name: form.name,
+    email: form.email,
+    password: form.password,
+  })
+  if (error) {
+    setError(error.message ?? 'Something went wrong')
+    setLoading(false)
+    return
   }
+
+  // username manually save karo
+  await fetch('/api/users', {
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ username: form.username }),
+  })
+
+  router.push('/')
+}
 
   async function handleGoogle() {
     await authClient.signIn.social({ provider: 'google' })

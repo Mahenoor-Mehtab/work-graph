@@ -31,7 +31,6 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: 'Something went wrong' }, { status: 500 })
   }
 }
-
 export async function POST(req: NextRequest) {
   try {
     const session = await auth.api.getSession({
@@ -41,7 +40,19 @@ export async function POST(req: NextRequest) {
     if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
     const body = await req.json()
-    const validated = collaborationSchema.parse(body)
+    const { receiverUsername, ...rest } = body
+
+    // username se receiver find karo
+    const receiver = await db.user.findUnique({
+      where: { username: receiverUsername },
+    })
+
+    if (!receiver) return NextResponse.json({ error: 'User not found' }, { status: 404 })
+
+    const validated = collaborationSchema.parse({
+      ...rest,
+      receiverId: receiver.id,
+    })
 
     const collab = await db.collaboration.create({
       data: {
